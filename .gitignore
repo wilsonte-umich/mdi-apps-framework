@@ -1,8 +1,13 @@
+# exclude R and RStudio temporary or local files
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
 Rplots.pdf
 
-_unused
-_old
+# exclude development artifacts and temporary files
+unused/
+old/
+_unused/
+_old/
+test.*
