@@ -97,14 +97,18 @@ setServerDir <- function(name, parentDir, ..., check = TRUE, create = FALSE){
     if(check  && !dir.exists(serverEnv[[name]])) stop(paste('missing directory:', serverEnv[[name]]))
     if(create && !dir.exists(serverEnv[[name]])) dir.create(serverEnv[[name]])
 }
-setServerDir('SHINY_DIR',   serverEnv$APPS_FRAMEWORK_DIR, 'shiny')
-setServerDir('SHARED_DIR',  serverEnv$SHINY_DIR, 'shared')
-setServerDir('SESSIONS_DIR',serverEnv$ACTIVE_MDI_DIR, 'sessions')
-setServerDir('FRAMEWORKS_DIR',serverEnv$ACTIVE_MDI_DIR, 'frameworks')
-setServerDir('SUITES_DIR',  serverEnv$ACTIVE_MDI_DIR, 'suites')
-setServerDir('STORR_DIR',   serverEnv$DATA_DIR, 'storr',   check = FALSE, create = TRUE)
-setServerDir('CACHE_DIR',   serverEnv$DATA_DIR, 'cache',   check = FALSE, create = TRUE)
-setServerDir('UPLOADS_DIR', serverEnv$DATA_DIR, 'uploads', check = FALSE, create = TRUE)
+setServerDir('SHINY_DIR',       serverEnv$APPS_FRAMEWORK_DIR,   'shiny')
+setServerDir('SHARED_DIR',      serverEnv$SHINY_DIR,            'shared')
+setServerDir('BIN_DIR',         serverEnv$ACTIVE_MDI_DIR,       'bin')
+setServerDir('CONFIG_DIR',      serverEnv$ACTIVE_MDI_DIR,       'config')
+setServerDir('CONTAINERS_DIR',  serverEnv$ACTIVE_MDI_DIR,       'containers')
+setServerDir('FRAMEWORKS_DIR',  serverEnv$ACTIVE_MDI_DIR,       'frameworks')
+setServerDir('RESOURCES_DIR',   serverEnv$ACTIVE_MDI_DIR,       'resources')
+setServerDir('SESSIONS_DIR',    serverEnv$ACTIVE_MDI_DIR,       'sessions')
+setServerDir('SUITES_DIR',      serverEnv$ACTIVE_MDI_DIR,       'suites')
+setServerDir('STORR_DIR',       serverEnv$DATA_DIR, 'storr',   check = FALSE, create = TRUE)
+setServerDir('CACHE_DIR',       serverEnv$DATA_DIR, 'cache',   check = FALSE, create = TRUE)
+setServerDir('UPLOADS_DIR',     serverEnv$DATA_DIR, 'uploads', check = FALSE, create = TRUE)
 setwd(serverEnv$SHARED_DIR)
 
 # declare version-specific R library(s) from which all packages are loaded
@@ -210,7 +214,6 @@ invisible(unlink(
 ))
 
 # initialize git repository tracking
-message("!!! run_server.R: initialize git repository tracking !!!")
 source(file.path('global', 'utilities', 'git.R'))
 frameworkDir_ <- R.utils::getAbsolutePath(serverEnv$APPS_FRAMEWORK_DIR)
 gitFrameworkStatus <- list(

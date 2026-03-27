@@ -32,10 +32,14 @@ serverBookmark <- NULL
 modalTmpFile <- NULL         # path to a file currently stored in www/tmp for loading into a modal
 inlineScripts <- list()      # paths to scripts sourced by app step servers
 authenticatedUserData <- list() # authenticated user info+token/key (session-specific, not always required)
+resolveActiveMdiDir <<- function(dir){
+    if(is.null(serverEnv$CALLER_MDI_DIR)) return(dir)
+    sub("/srv/active/mdi", serverEnv$CALLER_MDI_DIR, dir)
+}
 headerStatusData <- reactiveValues( # for UI display
     userDisplayName = if(serverEnv$REQUIRES_AUTHENTICATION) "" 
                       else paste(Sys.getenv(c('USERNAME', 'USER')), collapse = ""),
-    dataDir = R.utils::getAbsolutePath(serverEnv$DATA_DIR)
+    dataDirDisplay = resolveActiveMdiDir(R.utils::getAbsolutePath(serverEnv$DATA_DIR))
 )
 aceEditorCache <- list()
 rConsoleCache <- list()

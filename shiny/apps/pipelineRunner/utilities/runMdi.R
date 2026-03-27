@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------
 
 # the mdi utility associated with the same MDI installation as this server
-mdiCommandTarget <- file.path(serverEnv$MDI_DIR, 'mdi')
+mdiCommandTarget <- file.path(serverEnv$ACTIVE_MDI_DIR, 'mdi')
 
 # use system2 to call mdiCommandTarget
 runMdiCommand <- function(
@@ -72,11 +72,11 @@ isMdiSuccess <- function(results, caller = NULL, command = NULL, suite = NULL){
 # prevent errors due to mdi command target crashes from propagating as lock errors
 mdiUnlockAll <- function(){
     sapply(c(
-        file.path(serverEnv$MDI_DIR, "suites", "*.lock"),
-        file.path(serverEnv$MDI_DIR, "frameworks", "*.lock")
+        file.path(serverEnv$ACTIVE_MDI_DIR, "suites", "*.lock"),
+        file.path(serverEnv$ACTIVE_MDI_DIR, "frameworks", "*.lock")
     ), unlink, force = TRUE)
 }
 mdiSuiteIsLocked <- function(suite){
     if(is.null(suite)) return(FALSE)
-    file.exists(file.path(serverEnv$MDI_DIR, "suites", paste0(suite, ".lock")))
+    file.exists(file.path(serverEnv$ACTIVE_MDI_DIR, "suites", paste0(suite, ".lock")))
 }

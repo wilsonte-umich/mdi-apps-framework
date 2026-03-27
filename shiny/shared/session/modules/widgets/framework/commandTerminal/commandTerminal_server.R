@@ -48,7 +48,7 @@ output$prompt <- renderUI({
     domain <- if(is.null(host)) serverEnv$MDI_REMOTE_DOMAIN else host
     dir <- workingDir()
     prompt <- tags$span(if(is.null(domain)) user else paste(user, domain, sep = "@"), style = "color: #500;")
-    prompt <- if(is.null(dir)) prompt else paste(prompt, tags$span(dir, style = "color: #00a;"), sep = " ")
+    prompt <- if(is.null(dir)) prompt else paste(prompt, tags$span(resolveActiveMdiDir(dir), style = "color: #00a;"), sep = " ")
     tagList(
         HTML(paste0("[", prompt, "]", "$")),
         serverChooseDirIconUI(session$ns(chooseDirId), class = "mdi-dir-icon")

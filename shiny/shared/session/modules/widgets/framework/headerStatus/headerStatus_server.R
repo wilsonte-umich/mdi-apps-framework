@@ -20,7 +20,7 @@ output$userDisplayName <- renderText({
 })
 output$dataDir <- renderText({ 
     req(headerStatusData$userDisplayName)
-    headerStatusData$dataDir 
+    headerStatusData$dataDirDisplay
 })    
 
 # allow all users to view the site's code, and developers to edit
@@ -57,7 +57,7 @@ observeEvent(input$unlockAllRepos, {
     showUserDialog(
         "Unlock MDI Installation", 
         tags$p(paste("Please click OK to confirm that you wish to remove all framework and suite lock files from your local or remote MDI installation.")), # nolint
-        tags$p(serverEnv$ACTIVE_MDI_DIR, style = "margin-left: 2em;"),
+        tags$p(resolveActiveMdiDir(serverEnv$ACTIVE_MDI_DIR), style = "margin-left: 2em;"),
         tags$p("This action is usually only required if you experienced a fatal error during execution of an MDI command, e.g., in Pipeline Runner."), # nolint
         callback = function(...) {
             sapply(c(

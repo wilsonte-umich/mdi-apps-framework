@@ -404,7 +404,7 @@ buildEnvironmentButton <- function(){ # must come before executeButtonMetadata
             if(!dir.exists(conda)) missingCondaPipelines_[[pipeline]] <- pipeline
         } else { # both the host system and the pipeline support containers and runtime = auto or container
             image <- rev(strsplit(singularity$image, "/")[[1]])
-            imageFile <- file.path(serverEnv$MDI_DIR, "containers", image[2], pipeline, paste0(sub(":v", "-v", image[1]), ".sif"))
+            imageFile <- file.path(serverEnv$ACTIVE_MDI_DIR, "containers", image[2], pipeline, paste0(sub(":v", "-v", image[1]), ".sif"))
             if(!file.exists(imageFile)) missingImages_[[singularity$image]] <- pipeline
         }
     }       
